@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DeclarationView">
+        <attr format="string" name="declarant"/>
+        <attr format="string" name="details_url"/>
+    </declare-styleable>
+</resources>
