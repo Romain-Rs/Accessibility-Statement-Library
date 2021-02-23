@@ -6,7 +6,6 @@
     <string name="no_conformity_state">%1$s does not comply with WCAG criteria.</string>
     <string name="partial_conformity_state">%1$s is in partial compliance with WCAG criteria.</string>
     <string name="total_conformity_state">%1$s is in full compliance with WCAG criteria.</string>
-    <string name="declarant">ORANGE SA\nSiège social : 78, rue Olivier de Serres, 75 015 Paris</string>
     <string name="state_conformity">Accessibility statement</string>
     <string name="audit_date">Date of the audit</string>
     <string name="registrant_identity">Declarant identity</string>

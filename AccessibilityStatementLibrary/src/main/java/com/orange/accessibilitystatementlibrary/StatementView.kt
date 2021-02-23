@@ -2,6 +2,7 @@ package com.orange.accessibilitystatementlibrary
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.TypedArray
 import android.net.Uri
 import android.util.AttributeSet
 import android.view.View
@@ -14,8 +15,12 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class StatementView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-ConstraintLayout(context, attrs, defStyleAttr) {
+class StatementView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) :
+    ConstraintLayout(context, attrs, defStyleAttr) {
 
     val XML_DATE = "audit_date"
     val XML_REFERENTIAL = "referential"
@@ -47,12 +52,17 @@ ConstraintLayout(context, attrs, defStyleAttr) {
 
     private fun init(attrs: AttributeSet?) {
         View.inflate(context, R.layout.view_statement, this)
+        val attributes = context.obtainStyledAttributes(attrs, R.styleable.DeclarationView)
+        manageResultsFromXML(attributes)
+    }
+
+    fun manageResultsFromXML(attributes: TypedArray) {
         parseXML()
 
-        val ta = context.obtainStyledAttributes(attrs, R.styleable.DeclarationView)
         try {
-            val text = ta.getString(R.styleable.DeclarationView_declarant)
-            urlAccessibilityDeclaration = ta.getString(R.styleable.DeclarationView_details_url)
+            val text = attributes.getString(R.styleable.DeclarationView_declarant)
+            urlAccessibilityDeclaration =
+                attributes.getString(R.styleable.DeclarationView_details_url)
             declarantTextView.text = text
 
             buttonSeeMore.setOnClickListener {
@@ -63,7 +73,7 @@ ConstraintLayout(context, attrs, defStyleAttr) {
                 }
             }
         } finally {
-            ta.recycle()
+            attributes.recycle()
         }
     }
 
@@ -77,14 +87,6 @@ ConstraintLayout(context, attrs, defStyleAttr) {
         pullPaser.setInput(inputStream, null)
         processParsing(pullPaser)
         displayResults()
-    }
-
-    fun seeMoreDetails(view: View) {
-        if (urlAccessibilityDeclaration == null) {
-            return
-        }
-        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(urlAccessibilityDeclaration))
-        context.startActivity(browserIntent)
     }
 
     private fun processParsing(parser: XmlPullParser) {
